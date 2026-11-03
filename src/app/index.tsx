@@ -1,98 +1,139 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useState } from "react";
+import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import StudentCard from "../../components/StudentCard";
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
+type Student = {
+  id: string;
+  name: string;
+  year: string;
+  photoUrl: string;
+  flagged: boolean;
+};
+
+const initialStudents: Student[] = [
+  {
+    id: "1",
+    name: "Ana Cruz",
+    year: "1st Year",
+    photoUrl: "https://i.pravatar.cc/150?img=1",
+    flagged: false,
+  },
+  {
+    id: "2",
+    name: "Bea Santos",
+    year: "2nd Year",
+    photoUrl: "https://i.pravatar.cc/150?img=2",
+    flagged: false,
+  },
+  {
+    id: "3",
+    name: "Cid Ramos",
+    year: "3rd Year",
+    photoUrl: "https://i.pravatar.cc/150?img=3",
+    flagged: false,
+  },
+  {
+    id: "4",
+    name: "Dex Alonzo",
+    year: "4th Year",
+    photoUrl: "https://i.pravatar.cc/150?img=4",
+    flagged: false,
+  },
+  {
+    id: "5",
+    name: "Eli Tan",
+    year: "1st Year",
+    photoUrl: "https://i.pravatar.cc/150?img=5",
+    flagged: false,
+  },
+];
+
+export default function StudentDirectory() {
+  const [students, setStudents] = useState(initialStudents);
+  const [query, setQuery] = useState("");
+
+  const filteredStudents = students.filter((student) =>
+    student.name.toLowerCase().includes(query.toLowerCase()),
   );
-}
 
-export default function HomeScreen() {
+  const toggleFlag = (id: string) => {
+    setStudents((previousStudents) =>
+      previousStudents.map((student) =>
+        student.id === id ? { ...student, flagged: !student.flagged } : student,
+      ),
+    );
+  };
+
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+    <View style={styles.container}>
+      <Text style={styles.title}>Student Directory</Text>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+      <Text style={styles.subtitle}>
+        Search and manage student advising records
+      </Text>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search students..."
+        value={query}
+        onChangeText={setQuery}
+      />
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {filteredStudents.length > 0 ? (
+          filteredStudents.map((student) => (
+            <StudentCard
+              key={student.id}
+              id={student.id}
+              name={student.name}
+              year={student.year}
+              photoUrl={student.photoUrl}
+              flagged={student.flagged}
+              onToggleFlag={toggleFlag}
+            />
+          ))
+        ) : (
+          <Text style={styles.emptyText}>No students found.</Text>
+        )}
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+    backgroundColor: "#f4f6f9",
+    padding: 20,
+    paddingTop: 60,
   },
   title: {
-    textAlign: 'center',
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "#222",
+    textAlign: "center",
   },
-  code: {
-    textTransform: 'uppercase',
+  subtitle: {
+    fontSize: 14,
+    color: "#666",
+    marginTop: 5,
+    marginBottom: 20,
+    textAlign: "center",
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  searchInput: {
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 10,
+    padding: 14,
+    marginBottom: 20,
+    fontSize: 16,
+  },
+  emptyText: {
+    textAlign: "center",
+    color: "#777",
+    marginTop: 30,
+    fontSize: 16,
   },
 });

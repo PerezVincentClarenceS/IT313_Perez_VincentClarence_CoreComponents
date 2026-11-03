@@ -1,56 +1,131 @@
-# Welcome to your Expo app 👋
+# IT 313 Laboratory 6 – Student Directory Viewer
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Student Name:** Vincent Clarence Perez  
+**Project Name:** IT313_Perez_VincentClarence_CoreComponents
 
-## Get started
+## 1. Project Overview
 
-1. Install dependencies
+The Student Directory Viewer is a mobile application developed using React Native and Expo. It demonstrates the use of React Native Core Components to display student information, search for students, and flag students for advising.
 
-   ```bash
-   npm install
-   ```
+## 2. Problem Solved
 
-2. Start the app
+Managing student information manually can be difficult, especially when searching for a particular student or identifying students who need academic advising.
 
-   ```bash
-   npx expo start
-   ```
+This application provides a simple and organized student directory where users can:
 
-In the output, you'll find options to open the app in a
+- View student profiles and information.
+- Search for students by name.
+- Filter student records using a search input.
+- Flag or unflag students who need advising.
+- View student information through reusable components.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 3. React Native Core Components Used
 
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- **View** – Organizes the layout and groups elements.
+- **Text** – Displays student names, year levels, and labels.
+- **Image** – Displays student profile pictures.
+- **ScrollView** – Allows users to scroll through the student directory.
+- **TextInput** – Allows users to search for students.
+- **Pressable** – Provides an interactive button for flagging students.
+- **StyleSheet** – Organizes the application's styles.
 
-## Get a fresh project
+## 4. Project Components
 
-When you're ready, run:
+### StudentCard
+
+A reusable component that displays an individual student's photo, name, year level, and advising flag button.
+
+### StudentDirectory
+
+The main screen that manages the student records, search functionality, filtering, and flagging operations.
+
+## 5. Requirements Before Running
+
+Make sure the following are installed:
+
+- Node.js
+- Visual Studio Code
+- Expo Go application on your mobile phone
+- npm (included with Node.js)
+
+Your computer and mobile phone should be connected to the same Wi-Fi network when using the local development connection.
+
+## 6. How to Install and Run the Project
+
+### Step 1: Open the Project
+
+Open the project folder in Visual Studio Code.
+
+### Step 2: Open the Terminal
+
+In Visual Studio Code, click **Terminal → New Terminal**.
+
+### Step 3: Install Dependencies
+
+Run this command:
 
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+Wait until the installation finishes.
 
-### Other setup steps
+### Step 4: Start the Expo Development Server
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+Run:
 
-## Learn more
+```bash
+npx expo start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+Wait for the QR code to appear in the terminal.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Step 5: Open the Application Using Expo Go
 
-## Join the community
+1. Install and open Expo Go on your Android or iOS phone.
+2. Make sure your phone and computer are connected to the same Wi-Fi network.
+3. Scan the QR code displayed in the terminal.
+4. Wait for the application to load.
+5. The Student Directory Viewer should appear on your phone.
 
-Join our community of developers creating universal apps.
+**Alternative:** If the QR code does not connect, press `s` or check the Expo terminal options. You may also try:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+npx expo start --tunnel
+```
+
+### Step 6: Test the Application
+
+- View the displayed student profiles.
+- Enter a student's name in the search bar.
+- Check whether the directory filters the results.
+- Press the **Flag for Advising** button.
+- Check whether the button changes its appearance and label.
+
+## 7. Controlled and Uncontrolled TextInput Experiment
+
+The application initially uses a controlled TextInput through the `value` and `onChangeText` properties.
+
+For the experiment, these properties are temporarily removed to observe the difference between controlled and uncontrolled input behavior.
+
+After the experiment, restore the properties to make the search functionality work correctly.
+
+## 8. How to Stop the Application
+
+To stop the Expo development server, return to the terminal and press:
+
+```bash
+Ctrl + C
+```
+
+## 9. Project Start Command
+
+To run the application again in the future, open the project folder and execute:
+
+```bash
+npx expo start
+```
+
+## 10. Conclusion
+
+This project demonstrates how React Native Core Components work together to create a functional Student Directory Viewer. It applies reusable components, state management, user input, list rendering, and interactive controls.
